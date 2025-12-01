@@ -1,0 +1,89 @@
+.special-operations {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.special-operations h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.operations-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.operations-section h3 {
+  margin-top: 0;
+  color: #555;
+}
+
+.operations-section h4 {
+  margin: 1rem 0 0.5rem;
+  color: #666;
+}
+
+.operations-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.result-display {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #d4edda;
+  border-radius: 4px;
+  color: #155724;
+}
+
+.filter-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.filter-results {
+  margin-top: 1rem;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-table th,
+.results-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.results-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+}
+
+.results-table tbody tr:hover {
+  background-color: #f8f9fa;
+}

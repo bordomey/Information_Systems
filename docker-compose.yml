@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:13
+    container_name: labwork-db
+    environment:
+      POSTGRES_DB: studs
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - labwork-network
+
+  backend:
+    build: .
+    container_name: labwork-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - DATABASE_HOST=database
+      - DATABASE_NAME=studs
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+
+    networks:
+      - labwork-network
+
+  frontend:
+    build: ./frontend/labwork-frontend
+    container_name: labwork-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - labwork-network
+
+volumes:
+  postgres_data:
+
+networks:
+  labwork-network:
+    driver: bridge

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence 
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+             
+    <persistence-unit name="LabWorkPU" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:app/jdbc/LabWorkDB</jta-data-source>
+        <class>lab1.model.LabWork</class>
+        <class>lab1.model.Discipline</class>
+        <class>lab1.model.Person</class>
+        <class>lab1.model.Location</class>
+        <!-- Coordinates не нужно добавлять, так как это @Embeddable -->
+        <properties>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

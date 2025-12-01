@@ -1,0 +1,165 @@
+.dashboard {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.dashboard-loading, .dashboard-error, .dashboard-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.dashboard-error {
+  color: #d32f2f;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.labworks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.labworks-table th,
+.labworks-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.labworks-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.labworks-table th.sortable:hover {
+  background-color: #e9ecef;
+}
+
+.labworks-table th.sortable::after {
+  content: ' ↕';
+  opacity: 0.3;
+}
+
+.labworks-table th.sortable:hover::after {
+  opacity: 0.8;
+}
+
+.labworks-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.btn:last-child {
+  margin-right: 0;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #545b62;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-active {
+  background-color: #0056b3;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination-info {
+  color: #666;
+}
+
+.pagination-buttons {
+  display: flex;
+}
+
+.pagination .btn {
+  margin: 0 0.25rem;
+  min-width: 2.5rem;
+}

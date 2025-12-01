@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//Payara//DTD Payara Server 4 Resource Definitions//EN" 
+"https://raw.githubusercontent.com/payara/Payara-Server-Documentation/master/schemas/payara-resources_1_6.dtd">
+<resources>
+    <jdbc-connection-pool name="labworkPool" 
+        datasource-classname="org.postgresql.ds.PGSimpleDataSource"
+        res-type="javax.sql.DataSource">
+        <property name="serverName" value="database"/> <!-- изменено с labwork-db -->
+        <property name="portNumber" value="5432"/>
+        <property name="databaseName" value="studs"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="postgres"/>
+        <property name="connectionTimeout" value="30000"/>
+    </jdbc-connection-pool>
+    
+    <jdbc-resource jndi-name="java:app/jdbc/LabWorkDB" 
+                   pool-name="labworkPool"/>
+</resources>
