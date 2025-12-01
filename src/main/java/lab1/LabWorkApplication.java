@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import lab1.rest.LabWorkResource;
 import lab1.filter.CorsFilter;
+import lab1.exception.GlobalExceptionHandler;
 
 @ApplicationPath("/api")
 public class LabWorkApplication extends Application {
@@ -15,6 +16,7 @@ public class LabWorkApplication extends Application {
         Set<Class<?>> classes = new HashSet<>();
         classes.add(LabWorkResource.class);
         classes.add(CorsFilter.class);
+        classes.add(GlobalExceptionHandler.class);
         return classes;
     }
 }

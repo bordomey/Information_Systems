@@ -5,7 +5,7 @@
     <jdbc-connection-pool name="labworkPool" 
         datasource-classname="org.postgresql.ds.PGSimpleDataSource"
         res-type="javax.sql.DataSource">
-        <property name="serverName" value="database"/> <!-- изменено с labwork-db -->
+        <property name="serverName" value="database"/>
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="studs"/>
         <property name="user" value="postgres"/>

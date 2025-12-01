@@ -6,6 +6,7 @@ lab1\model\Coordinates.class
 lab1\model\LabWork.class
 lab1\rest\dtos\LabWorkDTO$DisciplineDTO.class
 lab1\model\Difficulty.class
+lab1\exception\GlobalExceptionHandler.class
 lab1\filter\CorsFilter.class
 lab1\rest\dtos\LabWorkDTO$LocationDTO.class
 lab1\dao\LabWorkDAO.class

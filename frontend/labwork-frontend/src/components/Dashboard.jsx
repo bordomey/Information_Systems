@@ -14,6 +14,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchLabWorks();
+    const intervalId = setInterval(fetchLabWorks, 30000);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -36,7 +38,6 @@ const Dashboard = () => {
   const applyFiltersAndSorting = () => {
     let result = [...labWorks];
     
-
     if (filterText) {
       const lowercasedFilter = filterText.toLowerCase();
       result = result.filter(item =>
@@ -77,11 +78,11 @@ const Dashboard = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (loading) {
+  if (loading && labWorks.length === 0) {
     return <div className="dashboard-loading">Loading lab works...</div>;
   }
 
-  if (error) {
+  if (error && labWorks.length === 0) {
     return <div className="dashboard-error">Error: {error}</div>;
   }
 
@@ -89,6 +90,9 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="dashboard-header">
         <h2>Lab Works</h2>
+        <button className="btn btn-primary" onClick={fetchLabWorks}>
+          Refresh
+        </button>
         <button className="btn btn-primary" onClick={() => window.location.href = '/labworks/new'}>
           Add New Lab Work
         </button>
