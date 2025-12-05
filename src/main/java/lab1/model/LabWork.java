@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "lab_work")
+@Table(name = "lab_work", 
+       uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class LabWork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     
     @Embedded

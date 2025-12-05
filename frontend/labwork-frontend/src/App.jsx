@@ -4,12 +4,24 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import LabWorkForm from './components/LabWorkForm';
 import SpecialOperations from './components/SpecialOperations';
+import Login from './components/Login';
+import ImportHistory from './components/ImportHistory';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />
+  },
+  {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -30,13 +42,21 @@ const router = createBrowserRouter([
       {
         path: "/special-operations",
         element: <SpecialOperations />
+      },
+      {
+        path: "/import-history",
+        element: <ImportHistory />
       }
     ]
   }
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;

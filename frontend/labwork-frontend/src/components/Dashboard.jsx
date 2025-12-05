@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { labWorkService } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -11,6 +12,8 @@ const Dashboard = () => {
   const [itemsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [filterText, setFilterText] = useState('');
+  
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     fetchLabWorks();
@@ -77,6 +80,17 @@ const Dashboard = () => {
   const totalPages = Math.ceil(filteredLabWorks.length / itemsPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
+  const handleDeleteAll = async () => {
+    if (window.confirm('Are you sure you want to delete ALL lab works? This action cannot be undone.')) {
+      try {
+        await labWorkService.deleteAllLabWorks();
+        fetchLabWorks(); 
+      } catch (err) {
+        alert('Failed to delete all lab works: ' + err.message);
+      }
+    }
+  };
 
   if (loading && labWorks.length === 0) {
     return <div className="dashboard-loading">Loading lab works...</div>;
@@ -96,6 +110,11 @@ const Dashboard = () => {
         <button className="btn btn-primary" onClick={() => window.location.href = '/labworks/new'}>
           Add New Lab Work
         </button>
+        {currentUser && currentUser.role === 'admin' && (
+          <button className="btn btn-danger" onClick={handleDeleteAll}>
+            Delete All Lab Works
+          </button>
+        )}
       </div>
 
       <div className="filter-section">

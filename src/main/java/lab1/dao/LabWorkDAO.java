@@ -22,6 +22,14 @@ public class LabWorkDAO {
         return entityManager.find(LabWork.class, id);
     }
     
+    public LabWork findByName(String name) {
+        TypedQuery<LabWork> query = entityManager.createQuery(
+            "SELECT l FROM LabWork l WHERE l.name = :name", LabWork.class);
+        query.setParameter("name", name);
+        List<LabWork> results = query.getResultList();
+        return results.isEmpty() ? null : results.get(0);
+    }
+    
     public List<LabWork> findAll() {
         TypedQuery<LabWork> query = entityManager.createQuery("SELECT l FROM LabWork l", LabWork.class);
         return query.getResultList();
@@ -36,6 +44,10 @@ public class LabWorkDAO {
         if (labWork != null) {
             entityManager.remove(labWork);
         }
+    }
+    
+    public void deleteAll() {
+        entityManager.createQuery("DELETE FROM LabWork").executeUpdate();
     }
     
     public List<LabWork> findByDescriptionSubstring(String substring) {

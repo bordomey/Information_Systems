@@ -1,61 +1,105 @@
-.app-layout {
+.layout {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
 }
 
-.app-header {
-  background-color: #282c34;
+.header {
+  background-color: #343a40;
   color: white;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.app-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-.app-navigation ul {
-  list-style: none;
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
   display: flex;
-  padding: 0;
-  margin: 1rem 0 0;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.app-navigation li {
-  margin-right: 1.5rem;
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
-.app-navigation a {
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.navigation {
+  display: flex;
+  gap: 1rem;
+}
+
+.navigation a {
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
-.app-navigation a:hover {
-  background-color: rgba(255,255,255,0.1);
+.navigation a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.app-navigation a.active {
-  background-color: #007bff;
-}
-
-.app-main {
+.main-content {
   flex: 1;
-  padding: 2rem;
-  background-color: #f5f5f5;
-  min-height: calc(100vh - 120px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  width: 100%;
 }
 
-.app-footer {
-  background-color: #282c34;
-  color: white;
+.footer {
+  background-color: #f8f9fa;
+  padding: 1rem 0;
   text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
+  border-top: 1px solid #dee2e6;
   margin-top: auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .user-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .navigation {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

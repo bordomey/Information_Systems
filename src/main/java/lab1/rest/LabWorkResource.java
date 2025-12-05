@@ -66,44 +66,49 @@ public class LabWorkResource {
                     .entity("{\"error\": \"Minimal point must be greater than 0\"}").build();
         }
         
-        Coordinates coordinates = new Coordinates(
-            labWorkDTO.getCoordinates().getX(),
-            labWorkDTO.getCoordinates().getY()
-        );
-        
-        Discipline discipline = new Discipline(
-            labWorkDTO.getDiscipline().getName(),
-            labWorkDTO.getDiscipline().getLectureHours()
-        );
-        
-        Person author = null;
-        if (labWorkDTO.getAuthor() != null) {
-            Location location = new Location(
-                labWorkDTO.getAuthor().getLocation().getX(),
-                labWorkDTO.getAuthor().getLocation().getY(),
-                labWorkDTO.getAuthor().getLocation().getZ()
+        try {
+            Coordinates coordinates = new Coordinates(
+                labWorkDTO.getCoordinates().getX(),
+                labWorkDTO.getCoordinates().getY()
             );
             
-            author = new Person(
-                labWorkDTO.getAuthor().getName(),
-                labWorkDTO.getAuthor().getEyeColor(),
-                labWorkDTO.getAuthor().getHairColor(),
-                location,
-                labWorkDTO.getAuthor().getHeight(),
-                labWorkDTO.getAuthor().getPassportID()
+            Discipline discipline = new Discipline(
+                labWorkDTO.getDiscipline().getName(),
+                labWorkDTO.getDiscipline().getLectureHours()
             );
+            
+            Person author = null;
+            if (labWorkDTO.getAuthor() != null) {
+                Location location = new Location(
+                    labWorkDTO.getAuthor().getLocation().getX(),
+                    labWorkDTO.getAuthor().getLocation().getY(),
+                    labWorkDTO.getAuthor().getLocation().getZ()
+                );
+                
+                author = new Person(
+                    labWorkDTO.getAuthor().getName(),
+                    labWorkDTO.getAuthor().getEyeColor(),
+                    labWorkDTO.getAuthor().getHairColor(),
+                    location,
+                    labWorkDTO.getAuthor().getHeight(),
+                    labWorkDTO.getAuthor().getPassportID()
+                );
+            }
+            
+            LabWork created = labWorkService.createLabWork(
+                labWorkDTO.getName(),
+                coordinates,
+                labWorkDTO.getDescription(),
+                labWorkDTO.getDifficulty(),
+                discipline,
+                labWorkDTO.getMinimalPoint(),
+                author
+            );
+            return Response.status(Response.Status.CREATED).entity(created).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
         }
-        
-        LabWork created = labWorkService.createLabWork(
-            labWorkDTO.getName(),
-            coordinates,
-            labWorkDTO.getDescription(),
-            labWorkDTO.getDifficulty(),
-            discipline,
-            labWorkDTO.getMinimalPoint(),
-            author
-        );
-        return Response.status(Response.Status.CREATED).entity(created).build();
     }
     
     @PUT
@@ -134,49 +139,54 @@ public class LabWorkResource {
                     .entity("{\"error\": \"Minimal point must be greater than 0\"}").build();
         }
         
-        Coordinates coordinates = new Coordinates(
-            labWorkDTO.getCoordinates().getX(),
-            labWorkDTO.getCoordinates().getY()
-        );
-        
-        Discipline discipline = new Discipline(
-            labWorkDTO.getDiscipline().getName(),
-            labWorkDTO.getDiscipline().getLectureHours()
-        );
-        
-        Person author = null;
-        if (labWorkDTO.getAuthor() != null) {
-            Location location = new Location(
-                labWorkDTO.getAuthor().getLocation().getX(),
-                labWorkDTO.getAuthor().getLocation().getY(),
-                labWorkDTO.getAuthor().getLocation().getZ()
+        try {
+            Coordinates coordinates = new Coordinates(
+                labWorkDTO.getCoordinates().getX(),
+                labWorkDTO.getCoordinates().getY()
             );
             
-            author = new Person(
-                labWorkDTO.getAuthor().getName(),
-                labWorkDTO.getAuthor().getEyeColor(),
-                labWorkDTO.getAuthor().getHairColor(),
-                location,
-                labWorkDTO.getAuthor().getHeight(),
-                labWorkDTO.getAuthor().getPassportID()
+            Discipline discipline = new Discipline(
+                labWorkDTO.getDiscipline().getName(),
+                labWorkDTO.getDiscipline().getLectureHours()
             );
+            
+            Person author = null;
+            if (labWorkDTO.getAuthor() != null) {
+                Location location = new Location(
+                    labWorkDTO.getAuthor().getLocation().getX(),
+                    labWorkDTO.getAuthor().getLocation().getY(),
+                    labWorkDTO.getAuthor().getLocation().getZ()
+                );
+                
+                author = new Person(
+                    labWorkDTO.getAuthor().getName(),
+                    labWorkDTO.getAuthor().getEyeColor(),
+                    labWorkDTO.getAuthor().getHairColor(),
+                    location,
+                    labWorkDTO.getAuthor().getHeight(),
+                    labWorkDTO.getAuthor().getPassportID()
+                );
+            }
+            
+            LabWork updated = labWorkService.updateLabWork(
+                id,
+                labWorkDTO.getName(),
+                coordinates,
+                labWorkDTO.getDescription(),
+                labWorkDTO.getDifficulty(),
+                discipline,
+                labWorkDTO.getMinimalPoint(),
+                author
+            );
+            if (updated == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("{\"error\": \"LabWork with ID " + id + " not found\"}").build();
+            }
+            return Response.ok(updated).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
         }
-        
-        LabWork updated = labWorkService.updateLabWork(
-            id,
-            labWorkDTO.getName(),
-            coordinates,
-            labWorkDTO.getDescription(),
-            labWorkDTO.getDifficulty(),
-            discipline,
-            labWorkDTO.getMinimalPoint(),
-            author
-        );
-        if (updated == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\": \"LabWork with ID " + id + " not found\"}").build();
-        }
-        return Response.ok(updated).build();
     }
     
     @DELETE
@@ -187,6 +197,12 @@ public class LabWorkResource {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("{\"error\": \"LabWork with ID " + id + " not found\"}").build();
         }
+        return Response.noContent().build();
+    }
+    
+    @DELETE
+    public Response deleteAllLabWorks() {
+        labWorkService.deleteAllLabWorks();
         return Response.noContent().build();
     }
     

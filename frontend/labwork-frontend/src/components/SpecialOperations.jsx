@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { labWorkService } from '../services/api';
+import React, { useState, useEffect } from 'react';
+import { labWorkService, importService } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 import './SpecialOperations.css';
 
 const SpecialOperations = () => {
@@ -13,6 +14,13 @@ const SpecialOperations = () => {
   const [difficultySteps, setDifficultySteps] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [importResult, setImportResult] = useState(null);
+  const [importProgress, setImportProgress] = useState(null);
+  const [progressInterval, setProgressInterval] = useState(null);
+  
+  const { currentUser } = useAuth();
 
   const calculateAverage = async () => {
     try {
@@ -106,6 +114,74 @@ const SpecialOperations = () => {
       setLoading(false);
     }
   };
+  
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setImportResult(null);
+    setImportProgress(null);
+    setError(null);
+    
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      setProgressInterval(null);
+    }
+  };
+  
+  const handleImport = async () => {
+    if (!currentUser) {
+      setError('You must be logged in to import files');
+      return;
+    }
+    
+    if (!selectedFile) {
+      setError('Please select a file to import');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      setImportProgress({ processedItems: 0, totalItems: 0, percentage: 0 });
+      
+      console.log('Selected file:', selectedFile);
+      const result = await importService.importLabWorks(selectedFile);
+      
+      const interval = setInterval(async () => {
+        try {
+          const progress = await importService.getImportProgress(result.operationId);
+          if (progress) {
+            setImportProgress(progress);
+          } else {
+            clearInterval(interval);
+            setImportProgress(null);
+            setImportResult(result);
+            setError('Import completed successfully');
+            setLoading(false);
+          }
+        } catch (err) {
+          clearInterval(interval);
+          setImportProgress(null);
+          setError(`Import progress check failed: ${err.message}`);
+          setLoading(false);
+        }
+      }, 500); 
+      
+      setProgressInterval(interval);
+    } catch (err) {
+      console.error('Import error details:', err);
+      setError(`Import failed: ${err.message}`);
+      setLoading(false);
+      setImportProgress(null);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (progressInterval) {
+        clearInterval(progressInterval);
+      }
+    };
+  }, [progressInterval]);
 
   return (
     <div className="special-operations">
@@ -225,6 +301,48 @@ const SpecialOperations = () => {
             {loading ? 'Adding...' : 'Add Top 10'}
           </button>
         </div>
+      </div>
+      
+      <div className="operations-section">
+        <h3>Import Lab Works from JSON File</h3>
+        <div className="filter-form">
+          <input
+            type="file"
+            accept=".json"
+            onChange={handleFileChange}
+            className="file-input"
+          />
+          <button 
+            className="btn btn-primary" 
+            onClick={handleImport}
+            disabled={loading || !selectedFile}
+          >
+            {loading ? 'Importing...' : 'Import JSON File'}
+          </button>
+        </div>
+        <div className="import-info">
+          <small>Note: Maximum 2 concurrent imports allowed. Imports taking more than 3 seconds will automatically adjust worker allocation.</small>
+        </div>
+        
+        {importProgress && (
+          <div className="progress-display">
+            <p>Import in progress: {importProgress.percentage}% ({importProgress.processedItems}/{importProgress.totalItems})</p>
+            <div className="progress-bar">
+              <div 
+                className="progress-fill" 
+                style={{ width: `${importProgress.percentage}%` }}
+              ></div>
+            </div>
+            <p><small>Processing items with 1-second delays to demonstrate worker allocation...</small></p>
+          </div>
+        )}
+        
+        {importResult && (
+          <div className="result-display">
+            <p>Import Result: <strong>{importResult.message}</strong></p>
+            <p>Operation ID: <strong>{importResult.operationId}</strong></p>
+          </div>
+        )}
       </div>
       
       {filterResult.length > 0 && (

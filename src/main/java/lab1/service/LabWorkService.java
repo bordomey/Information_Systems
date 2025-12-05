@@ -36,6 +36,10 @@ public class LabWorkService {
         if (minimalPoint == null || minimalPoint <= 0) {
             throw new IllegalArgumentException("Minimal point must be greater than 0");
         }
+        
+        if (labWorkDAO.findByName(name) != null) {
+            throw new IllegalArgumentException("LabWork with name '" + name + "' already exists");
+        }
 
         LabWork labWork = new LabWork(name, coordinates, description, difficulty, discipline, minimalPoint, author);
         return labWorkDAO.create(labWork);
@@ -68,6 +72,10 @@ public class LabWorkService {
         if (minimalPoint == null || minimalPoint <= 0) {
             throw new IllegalArgumentException("Minimal point must be greater than 0");
         }
+        
+        if (!name.equals(labWork.getName()) && labWorkDAO.findByName(name) != null) {
+            throw new IllegalArgumentException("LabWork with name '" + name + "' already exists");
+        }
 
         labWork.setName(name);
         labWork.setCoordinates(coordinates);
@@ -87,6 +95,10 @@ public class LabWorkService {
         }
         labWorkDAO.delete(id);
         return true;
+    }
+    
+    public void deleteAllLabWorks() {
+        labWorkDAO.deleteAll();
     }
 
     public List<LabWork> getAllLabWorks() {

@@ -12,6 +12,7 @@
         <class>lab1.model.Discipline</class>
         <class>lab1.model.Person</class>
         <class>lab1.model.Location</class>
+        <class>lab1.model.ImportHistory</class>
         <!-- Coordinates не нужно добавлять, так как это @Embeddable -->
         <properties>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
