@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authService } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -15,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in (from localStorage)
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
@@ -28,34 +28,40 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (username, password) => {
-    // Simple authentication - in a real app, this would call an API
-    if (username && password) {
+  const login = async (username, password) => {
+    try {
+      const userData = await authService.login(username, password);
       const user = { 
-        username, 
-        role: username === 'admin' ? 'admin' : 'user',
+        id: userData.id,
+        username: userData.username, 
+        role: userData.role,
+        token: userData.token,
         isAuthenticated: true 
       };
       localStorage.setItem('user', JSON.stringify(user));
       setCurrentUser(user);
-      return Promise.resolve(user);
+      return user;
+    } catch (error) {
+      return Promise.reject(new Error(error.message));
     }
-    return Promise.reject(new Error('Invalid credentials'));
   };
 
-  const signup = (username, password) => {
-    // Simple signup - in a real app, this would call an API
-    if (username && password) {
+  const signup = async (username, password) => {
+    try {
+      const userData = await authService.register(username, password);
       const user = { 
-        username, 
-        role: 'user',
+        id: userData.id,
+        username: userData.username, 
+        role: userData.role,
+        token: userData.token,
         isAuthenticated: true 
       };
       localStorage.setItem('user', JSON.stringify(user));
       setCurrentUser(user);
-      return Promise.resolve(user);
+      return user;
+    } catch (error) {
+      return Promise.reject(new Error(error.message));
     }
-    return Promise.reject(new Error('Username and password are required'));
   };
 
   const logout = () => {
@@ -65,8 +71,8 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     currentUser,
-    login,
-    signup,
+    login: login,
+    signup: signup,
     logout,
     loading
   };

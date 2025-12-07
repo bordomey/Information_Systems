@@ -13,6 +13,7 @@
         <class>lab1.model.Person</class>
         <class>lab1.model.Location</class>
         <class>lab1.model.ImportHistory</class>
+        <class>lab1.model.User</class>
         <properties>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>

@@ -1,3 +1,7 @@
+C:\study\IS\Labs\lab1\src\main\java\lab1\service\UserService.java
+C:\study\IS\Labs\lab1\src\main\java\lab1\util\InitializeUsers.java
+C:\study\IS\Labs\lab1\src\main\java\lab1\model\User.java
+C:\study\IS\Labs\lab1\src\main\java\lab1\rest\AuthResource.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\service\LabWorkService.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\dao\LabWorkDAO.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\rest\dtos\LabWorkDTO.java
@@ -9,10 +13,12 @@ C:\study\IS\Labs\lab1\src\main\java\lab1\filter\CorsFilter.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\model\Person.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\rest\ImportResource.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\service\ImportService.java
+C:\study\IS\Labs\lab1\src\main\java\lab1\dao\UserDAO.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\model\Difficulty.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\model\Location.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\LabWorkApplication.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\model\Color.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\model\LabWork.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\rest\LabWorkResource.java
+C:\study\IS\Labs\lab1\src\main\java\lab1\filter\AuthFilter.java
 C:\study\IS\Labs\lab1\src\main\java\lab1\model\Discipline.java

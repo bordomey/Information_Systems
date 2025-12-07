@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
 import lab1.rest.LabWorkResource;
+import lab1.rest.AuthResource;
 import lab1.rest.ImportResource;
 import lab1.filter.CorsFilter;
 import lab1.filter.AuthFilter;
@@ -20,6 +21,7 @@ public class LabWorkApplication extends Application {
         Set<Class<?>> classes = new HashSet<>();
         classes.add(LabWorkResource.class);
         classes.add(ImportResource.class);
+        classes.add(AuthResource.class);
         classes.add(CorsFilter.class);
         classes.add(AuthFilter.class);
         classes.add(GlobalExceptionHandler.class);

@@ -26,7 +26,9 @@ apiClient.interceptors.request.use(
       }
     }
     
-    if (user) {
+    if (user && user.token) {
+      config.headers['Authorization'] = `Bearer ${user.token}`;
+    } else if (user) {
       config.headers['X-User-Name'] = user.username;
       config.headers['X-User-Role'] = user.role;
     }
@@ -195,6 +197,26 @@ export const importService = {
       }
       
       throw new Error(`Failed to get import history: ${error.message}`);
+    }
+  }
+};
+
+export const authService = {
+  login: async (username, password) => {
+    try {
+      const response = await apiClient.post('/auth/login', { username, password });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Login failed: ${error.response?.data?.error || error.message}`);
+    }
+  },
+  
+  register: async (username, password) => {
+    try {
+      const response = await apiClient.post('/auth/register', { username, password });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Registration failed: ${error.response?.data?.error || error.message}`);
     }
   }
 };

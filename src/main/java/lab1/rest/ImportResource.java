@@ -2,8 +2,10 @@ package lab1.rest;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import lab1.service.ImportService;
 import lab1.model.ImportHistory;
 import lab1.service.ImportService.ImportProgress;
@@ -27,7 +29,7 @@ public class ImportResource {
     
     @OPTIONS
     @Path("/labworks")
-    public Response preflight() {
+    public Response preflightImport() {
         return Response.ok().build();
     }
     
@@ -36,7 +38,8 @@ public class ImportResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response importLabWorksFromJson(MultipartFormDataInput input, 
-                                         @HeaderParam("X-User-Name") String username) {
+                                         @Context ContainerRequestContext requestContext) {
+        String username = (String) requestContext.getProperty("username");
         try {
             if (username == null || username.isEmpty()) {
                 return Response.status(Response.Status.UNAUTHORIZED)
@@ -64,7 +67,6 @@ public class ImportResource {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Import failed: " + e.getMessage(), e);
             
-            // Handle specific exceptions
             if (e.getMessage().contains("Maximum concurrent imports reached")) {
                 return Response.status(Response.Status.TOO_MANY_REQUESTS)
                     .entity("{\"error\": \"" + e.getMessage() + "\"}").build();
@@ -120,10 +122,10 @@ public class ImportResource {
     @GET
     @Path("/history")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getImportHistory(@HeaderParam("X-User-Name") String username, 
-                                   @HeaderParam("X-User-Role") String userRole) {
+    public Response getImportHistory(@Context ContainerRequestContext requestContext) {
+        String username = (String) requestContext.getProperty("username");
+        String userRole = (String) requestContext.getProperty("role");
         try {
-            // Check if user is authenticated
             if (username == null || username.isEmpty()) {
                 return Response.status(Response.Status.UNAUTHORIZED)
                     .entity("{\"error\": \"Authentication required to view import history\"}").build();

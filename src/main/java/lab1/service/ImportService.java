@@ -36,7 +36,6 @@ public class ImportService {
     private static final ConcurrentHashMap<String, ImportContext> activeImports = new ConcurrentHashMap<>();
     private static final int MAX_CONCURRENT_IMPORTS = 2;
     
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
     
     @Inject
     private LabWorkDAO labWorkDAO;
