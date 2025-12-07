@@ -15,10 +15,17 @@
         <class>lab1.model.ImportHistory</class>
         <class>lab1.model.User</class>
         <properties>
+            <property name="eclipselink.jdbc.isolation" value="serializable"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>
             <property name="eclipselink.logging.level" value="FINEST"/>
             <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.logging.level.transaction" value="INFO"/>
+            <property name="eclipselink.logging.level.connection" value="INFO"/>
+            <property name="eclipselink.jdbc.batch-writing" value="None"/>
+            <property name="eclipselink.optimistic-locking" value="ALL_COLUMNS"/>
+            <property name="eclipselink.pessimistic-lock.timeout.unit" value="MILLISECONDS"/>
+            <property name="eclipselink.pessimistic-lock.timeout" value="5000"/>
         </properties>
     </persistence-unit>
 </persistence>

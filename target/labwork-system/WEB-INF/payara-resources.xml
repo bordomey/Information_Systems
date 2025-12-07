@@ -11,6 +11,7 @@
         <property name="user" value="postgres"/>
         <property name="password" value="postgres"/>
         <property name="connectionTimeout" value="30000"/>
+        <property name="transaction-isolation-level" value="serializable"/>
     </jdbc-connection-pool>
     
     <jdbc-resource jndi-name="java:app/jdbc/LabWorkDB" 
